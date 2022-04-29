@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import './style.css';
 import '@fortawesome/fontawesome-free/js/fontawesome.js';
 import '@fortawesome/fontawesome-free/js/solid.js';
