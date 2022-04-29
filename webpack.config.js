@@ -10,7 +10,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      bundle: path.resolve(__dirname, 'src/index.js'),
     }),
   ],
   output: {
