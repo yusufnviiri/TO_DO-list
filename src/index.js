@@ -37,7 +37,7 @@ const displayItems = () => {
       index: 2,
     },
     {
-      description: 'Watch football',
+      description: 'Email Student success',
       completed: false,
       index: 3,
     },
