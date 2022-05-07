@@ -93,13 +93,19 @@ button {
   border: none;
 }
 
-.compelted {
+#true {
   text-decoration: line-through;
-  color: green;
+  color: rgb(105, 98, 98);
+}
+
+.complete {
+  text-decoration: line-through;
+  color: rgb(43, 29, 29);
+  font-weight: 900;
 }
 
 .edit {
-  color: rebeccapurple;
+  color: #00bcd4;
   font-size: 17px;
   margin-right: 20px;
 }

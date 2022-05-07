@@ -1,7 +1,13 @@
+/* eslint-disable no-unreachable */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable radix */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable eqeqeq */
 import './style.css';
+
+import {
+  statechange, deleteCompleted, checkbx, clearCompleted,
+} from './modules/update.js';
 
 class List {
   constructor(description, index, completed) {
@@ -19,25 +25,22 @@ if (localStorage.getItem('mylist') === null) {
 const taskLs = JSON.parse(localStorage.getItem('mylist'));
 
 // updateLocalStorage
-
-function updateLocalStorage() {
+const updateLocalStorage = () => {
   localStorage.setItem('mylist', JSON.stringify(taskLs));
   const another = JSON.parse(localStorage.getItem('mylist'));
   return another;
-}
+};
 
 // display todoList
 const displayItem = (items) => {
   let todoos = '';
 
   for (let i = 0; i < items.length; i += 1) {
-    const ischecked = items.completed == 'completed' ? 'checked' : '';
-
     todoos += `
   <div class="todoItem">
-  <div class="todoCheckbox">
-    <input type="checkbox" class="checkBox" ${ischecked} />
-    <p class="todoActivity" > ${items[i].description}  </p>
+  <div class="${items[i].index}">
+    <input type="checkbox" class="checkBox"  />
+    <p class="todoActivity" id=${items[i].completed}> ${items[i].description}  </p>
   </div>
   <div class="${items[i].index}">
   <button class="addbtn">
@@ -52,6 +55,21 @@ const displayItem = (items) => {
   }
   return todoos;
 };
+
+const monitor = () => {
+  if (checkbx) {
+    console.log('');
+    statechange();
+  } else {
+    checkbx.addEventListener('change', () => {
+      console.log(' ');
+    });
+  }
+};
+
+monitor();
+deleteCompleted();
+clearCompleted;
 
 // clear fields
 
@@ -84,8 +102,11 @@ const form = document.querySelector('.form');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const task = document.querySelector('.taskInput').value;
+  const taskInput = document.querySelector('.taskInput');
 
   addItem(task);
+  location.reload();
+  taskInput.focus();
 });
 
 const deleted = (pop) => {
@@ -146,7 +167,7 @@ const editItem = (tar) => {
       editForm.addEventListener('submit', (e) => {
         e.preventDefault();
         taskLs[p].description = editInput.value;
-        taskLs[p].completed = true;
+        taskLs[p].completed = false;
         taskLs[p].index = num;
 
         updateLocalStorage();
