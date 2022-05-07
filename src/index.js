@@ -1,6 +1,6 @@
-/* eslint-disable eqeqeq */
+/* eslint-disable radix */
 /* eslint-disable no-restricted-globals */
-
+/* eslint-disable eqeqeq */
 import './style.css';
 
 class List {
@@ -70,18 +70,21 @@ const showList = () => {
 };
 
 // Create new task
+
 const addItem = (description) => {
   const anothertask = new List(description, taskLs.length + 1, false);
   taskLs.push(anothertask);
   updateLocalStorage();
   showList();
 };
+
 // to edit
 
 const form = document.querySelector('.form');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const task = document.querySelector('.taskInput').value;
+
   addItem(task);
 });
 
@@ -91,19 +94,18 @@ const deleted = (pop) => {
     if (element.index == pop) {
       removeLss.splice(index, 1);
       localStorage.setItem('mylist', JSON.stringify(removeLss));
-
-      console.log(' ');
     }
   });
   localStorage.setItem('mylist', JSON.stringify(removeLss));
   location.reload();
 };
+
 // delete function
 
 const deleteItem = (ele) => {
   if (ele.classList.contains('delete')) {
     ele.parentElement.parentElement.parentElement.remove();
-    // removeItem();}
+
     const pop = ele.parentElement.parentElement.classList.value;
 
     deleted(pop);
@@ -124,17 +126,6 @@ if (!toDelete) {
   });
 }
 
-// event to delete from ls
-
-// editing
-const edits = (description, index, completed) => {
-  const anothertask = new List(description, index, completed);
-  taskLs.push(anothertask);
-  updateLocalStorage();
-  showList();
-  console.log(`edited${index}`);
-};
-
 // edit item
 
 const toEdit = document.querySelector('.list-content');
@@ -147,27 +138,21 @@ const editItem = (tar) => {
     const editInput = document.querySelector('.editInput');
     editInput.focus();
     const itemId = tar.parentElement.parentElement.parentElement.classList.value;
-    const editItem = JSON.parse(localStorage.getItem('mylist'));
+    const num = parseInt(itemId);
+    const p = num - 1;
 
-    for (let i = 0; i < editItem.length; i += 1) {
-      if (!editItem[i]) {
-        console.log(' ');
-      } else if (editItem[i].index == itemId) {
-        editInput.value = editItem[i].description;
-        editForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          editItem[i].description = editInput.value;
-          editItem[i].completed = false;
-          editItem[i].index = itemId;
-          edits(
-            editItem[i].description,
-            editItem[i].index,
-            editItem[i].completed,
-          );
-          deleted(editItem[i].index); // delete item from ls
-          location.reload();
-        });
-      }
+    if (taskLs[p].index === num) {
+      editInput.value = taskLs[p].description;
+      editForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        taskLs[p].description = editInput.value;
+        taskLs[p].completed = true;
+        taskLs[p].index = num;
+
+        updateLocalStorage();
+
+        location.reload();
+      });
     }
   }
 };
@@ -188,8 +173,17 @@ refresh.addEventListener('click', () => {
 });
 
 const init = () => {
+  taskLs.forEach((element, index) => {
+    if (element) {
+      element.index = index + 1;
+    }
+  });
+
+  updateLocalStorage();
+
   window.onload = () => {
     showList();
   };
+  console.log(' ');
 };
 init();
