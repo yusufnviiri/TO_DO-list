@@ -13,8 +13,7 @@ To do List App which have the following functionalities:
 - Linters (Lighthouse, Webhint, Stylelint, Eslint)
 
 ## Live Demo
-[coming]
-
+[live link]()
 ## setup to access the project
 > To get a local copy up and running follow these simple steps.
 
